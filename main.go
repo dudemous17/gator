@@ -15,7 +15,7 @@ func main() {
 	}
 
 	// Set the current user and update the file
-	err = cfg.SetUser("YourName") // Replace "YourName" with your actual name
+	err = cfg.SetUser("dudemous")
 	if err != nil {
 		log.Fatalf("error setting user: %v", err)
 	}
