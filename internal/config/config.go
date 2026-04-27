@@ -16,7 +16,7 @@ type Config struct {
 // SetUser sets the current_user_name field and writes the config back to the JSON file.
 func (cfg *Config) SetUser(username string) error {
 	cfg.CurrentUserName = username
-	return cfg.write()
+	return write(*cfg)
 }
 
 // Read reads the config file from the home directory and returns a Config struct.
@@ -27,7 +27,7 @@ func Read() (Config, error) {
 	}
 
 	// Read the file from the HOME directory
-	data, err := os.ReadFile(fullPath)
+	data, err := os.Open(fullPath)
 	if err != nil {
 		return Config{}, err
 	}
