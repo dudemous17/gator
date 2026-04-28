@@ -1,11 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/dudemous17/gator/internal/config"
 )
+
+type state struct {
+	cfg *config.Config
+}
 
 func main() {
 	// Read the config file
@@ -14,18 +18,24 @@ func main() {
 		log.Fatalf("error reading config: %v", err)
 	}
 
-	// Set the current user and update the file
-	err = cfg.SetUser("dudemous")
-	if err != nil {
-		log.Fatalf("error setting user: %v", err)
-	}
-	fmt.Println("Config updated successfully.")
-
-	// Read again and print results
-	updatedCfg, err := config.Read()
-	if err != nil {
-		log.Fatalf("error reading updated config: %v", err)
+	programState := &state{
+		cfg: &cfg,
 	}
 
-	fmt.Printf("Current Config Struct: %+v\n", updatedCfg)
+	cmds := commands{
+		registeredCommands: make(map[string]func(*state, command) error),
+	}
+	cmds.register("login", handleLogin)
+
+	if len(os.Args) < 2 {
+		log.Fatal("Usage: cli <command> [args...]")
+	}
+
+	cmdName := os.Args[1]
+	cmdArgs := os.Args[2:]
+
+	err = cmds.run(programState, command{Name: cmdName, Args: cmdArgs})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
