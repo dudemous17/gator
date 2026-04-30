@@ -38,7 +38,7 @@ func main() {
 		registeredCommands: make(map[string]func(*state, command) error),
 	}
 	cmds.register("login", handleLogin)
-	cmds.register("register", handlerRegister)
+	cmds.register("register", handleRegister)
 
 	if len(os.Args) < 2 {
 		log.Fatal("Usage: cli <command> [args...]")
