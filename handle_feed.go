@@ -43,13 +43,18 @@ func handleAddFeed(s *state, cmd command) error {
 }
 
 func handleListFeeds(s *state, cmd command) error {
-	feeds, err := s.db.GetUsers(context.Background())
+	feeds, err := s.db.GetFeeds(context.Background())
 	if err != nil {
 		return fmt.Errorf("couldn't list feeds: %w", err)
 	}
 	for _, feed := range feeds {
+		user, err := s.db.GetUserFromID(context.Background(), feed.UserID)
+		if err != nil {
+			return err
+		}
+
 		fmt.Printf("* %v\n", feed.Name)
-		fmt.Printf("* %v\n", feed.UserID)
+		fmt.Printf("* %v\n", user.Name)
 	}
 
 	return nil
