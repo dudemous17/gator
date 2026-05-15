@@ -46,7 +46,7 @@ Once installed and configured, you can interact with the program using various c
 ```bash
 gator
 ```
-**Register a user:**
+* **Register a user:**
   ```bash
   gator register <username>
   ```
