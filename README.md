@@ -43,9 +43,9 @@ Before running the program, you need to create a configuration file named `.gato
 Once installed and configured, you can interact with the program using various commands. Here are a few examples:
 
 * **Usage:**
-```bash
-gator
-```
+  ```bash
+  gator
+  ```
 * **Register a user:**
   ```bash
   gator register <username>
